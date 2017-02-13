@@ -52,7 +52,7 @@
 		(<include refid="columns" />)
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
-			(null,0,#{item.createTime},#{item.deleted},#{item.name},#{item.sex},#{item.age},#{item.birthday},#{item.email},#{item.price})
+			(null,0,#{item.createTime},null,#{item.deleted},#{item.name},#{item.sex},#{item.age},#{item.birthday},#{item.email},#{item.price})
 		</foreach>
 	</insert>
 	

@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class LoginController {
 
-
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String login(Model model) {
         //判断 如果redis 中 存在 session ，则直接进入index,否则进入login
@@ -29,13 +28,24 @@ public class LoginController {
         }
     }
 
+    /**
+     * 登录后台
+     * @param username 用户名
+     * @param password 密码
+     * @param rememberMe 记住我
+     * @param captcha 验证码
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String dologin(@RequestParam(value = "username", required = true) String username,
                           @RequestParam(value = "password", required = true) String password,
                           @RequestParam(value = "rememberMe", required = false) Boolean rememberMe,
                           @RequestParam(value = "captcha", required = false) String captcha,
                           HttpServletRequest request, HttpServletResponse response,
-                          Model model) {
+                          Model model){
 
         /*try {
             this.authorize(username, password, (rememberMe != null ? rememberMe : false), captcha);

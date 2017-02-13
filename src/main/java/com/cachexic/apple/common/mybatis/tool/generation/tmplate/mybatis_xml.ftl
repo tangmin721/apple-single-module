@@ -35,7 +35,7 @@
 		(<include refid="columns" />)
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
-			(null,0,${r"#{"}${"item.createTime"}${r"}"},${r"#{"}${"item.deleted"}${r"}"},<#list entity.myfieldList as e>${r"#{"}item.${e.fieldName}${r"}"}<#if e_has_next>,</#if></#list>)
+			(null,0,${r"#{"}${"item.createTime"}${r"}"},null,${r"#{"}${"item.deleted"}${r"}"},<#list entity.myfieldList as e>${r"#{"}item.${e.fieldName}${r"}"}<#if e_has_next>,</#if></#list>)
 		</foreach>
 	</insert>
 	

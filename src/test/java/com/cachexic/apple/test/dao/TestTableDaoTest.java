@@ -1,9 +1,8 @@
-package com.cachexic.apple.system.dao;
+package com.cachexic.apple.test.dao;
 
 import com.cachexic.apple.common.junit.SpringJunitTest;
 import com.cachexic.apple.common.utils.DateUtils;
 import com.cachexic.apple.system.entity.TestTableQuery;
-import com.cachexic.apple.test.dao.TestTableDao;
 import com.cachexic.apple.test.entity.TestTable;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
@@ -16,13 +15,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Description:
+ * @description: 测试环境搭建
  * @author: tangmin
- * @date: 2017年02月13日 18:32
+ * @date: 2017-02-13 22:17:32
  * @version: 1.0
  */
 public class TestTableDaoTest extends SpringJunitTest {
-
     private Logger logger = Logger.getLogger(TestTableDaoTest.class);
 
     @Autowired
@@ -32,14 +30,13 @@ public class TestTableDaoTest extends SpringJunitTest {
      * 测试日志配置
      */
     @Test
-    public void testLog(){
+    public void testLog() {
         logger.debug("你好debug!!!");
         logger.info("你好info!!!");
         logger.debug("你好debug!!!");
         logger.info("你好info!!!");
         logger.debug("你好debug!!!");
         logger.info("你好info!!!");
-
 
 
         logger.warn("你好warn!!!");
@@ -50,6 +47,7 @@ public class TestTableDaoTest extends SpringJunitTest {
 
     /**
      * dao插入
+     *
      * @throws ParseException
      */
     @Rollback(false)
@@ -57,7 +55,7 @@ public class TestTableDaoTest extends SpringJunitTest {
     public void daoTestInsert() throws ParseException {
         TestTable testTable = getTestTable("1995-01-01", 25, "王五");
 
-        System.out.println(":::id::"+ dao.insert(testTable));
+        System.out.println(":::id::" + dao.insert(testTable));
     }
 
     private TestTable getTestTable(String source, int age, String 王五) throws ParseException {
@@ -72,20 +70,21 @@ public class TestTableDaoTest extends SpringJunitTest {
 
     /**
      * 批量插入
+     *
      * @throws ParseException
      */
-    @Rollback(true)
+    @Rollback(false)
     @Test
     public void daoTestInsertBatch() throws ParseException {
         long startTime = System.nanoTime();
         List<TestTable> list = Lists.newArrayList();
-        for(int i=1;i<10001;i++){
+        for (int i = 1; i < 10001; i++) {
             TestTable entity = getTestTable("1990-01-01", 18, "张三" + i);
             list.add(entity);
         }
         dao.insertBatch(list);
         System.out.println(System.nanoTime() - startTime);
-		/*1秒=1000豪秒
+        /*1秒=1000豪秒
 		1毫秒=1000微秒
 		1微秒=1000毫微秒
 		所以1秒=1000*1000*1000=1000000000毫微秒*/
@@ -96,13 +95,14 @@ public class TestTableDaoTest extends SpringJunitTest {
 
     /**
      * 批量插入(循环10000)
+     *
      * @throws ParseException
      */
-    @Rollback(true)
+    @Rollback(false)
     @Test
     public void daoTestInsertBatchFor() throws ParseException {
         long startTime = System.nanoTime();
-        for(int i=1;i<10001;i++){
+        for (int i = 1; i < 10001; i++) {
             TestTable entity = getTestTable("1990-01-01", 18, "李四" + i);
             dao.insert(entity);
         }
@@ -118,7 +118,7 @@ public class TestTableDaoTest extends SpringJunitTest {
      */
     @Test
     public void daoTestSelectById() {
-        TestTable entity = dao.selectById(10l);
+        TestTable entity = dao.selectById(1l);
         System.out.println(entity);
     }
 
@@ -127,21 +127,22 @@ public class TestTableDaoTest extends SpringJunitTest {
      */
     @Test
     public void daoTestSelectByIds() {
-        List<Long> ids = Lists.newArrayList(1l,2l,3l);
+        List<Long> ids = Lists.newArrayList(1l, 2l, 3l);
         List<TestTable> selectByIds = dao.selectByIds(ids);
         System.out.println(selectByIds);
     }
 
     /**
      * dao更新
+     *
      * @throws ParseException
      */
     @Rollback(false)
     @Test
     public void daoTestUpdate() throws ParseException {
-        TestTable entity = dao.selectById(2l);
+        TestTable entity = dao.selectById(3l);
 
-        Date date = DateUtils.SHORT_DATE_FORMAT.parse("1998-01-01");
+        Date date = DateUtils.SHORT_DATE_FORMAT.parse("1998-08-08");
         entity.setAge(15);
         entity.setName("张三111");
         entity.setBirthday(date);
@@ -154,7 +155,7 @@ public class TestTableDaoTest extends SpringJunitTest {
     /**
      * dao单条记录根据id彻底删除
      */
-    @Rollback(true)
+    @Rollback(false)
     @Test
     public void daoTestDeleteById() {
         dao.deleteById(1l);
@@ -166,7 +167,7 @@ public class TestTableDaoTest extends SpringJunitTest {
     @Rollback(true)
     @Test
     public void daoTestDeleteByIds() {
-        List<Long> ids = Lists.newArrayList(1l,2l,3l);
+        List<Long> ids = Lists.newArrayList(1l, 2l, 3l);
         dao.deleteByIds(ids);
     }
 
@@ -174,30 +175,29 @@ public class TestTableDaoTest extends SpringJunitTest {
      * 查询获取所有记录
      */
     @Test
-    public void daoTestSelectList(){
+    public void daoTestSelectList() {
         TestTableQuery query = new TestTableQuery();
-        query.setDeleted(1);
+        query.setDeleted(0);
         List<TestTable> entitys = dao.selectList(query);
-        System.out.println(":::::::::"+entitys);
+        System.out.println(":::::::::" + entitys);
     }
 
     @Test
-    public void daoTestSelectListPage(){
+    public void daoTestSelectListPage() {
         TestTableQuery query = new TestTableQuery();
-        query.setDeleted(1);
-        System.out.println(":::::::::"+ dao.selectListPage(query));
+        query.setDeleted(0);
+        query.setPageCurrent(1l);
+        query.setPageSize(10l);
+        System.out.println(":::::::::" + dao.selectListPage(query));
     }
 
     /**
      * 总记录
      */
     @Test
-    public void daoTestSelectListTotal(){
+    public void daoTestSelectListTotal() {
         TestTableQuery query = new TestTableQuery();
         query.setDeleted(1);
-        System.out.println(":::::::::"+ dao.selectListTotal(query));
+        System.out.println(":::::::::" + dao.selectListTotal(query));
     }
-
-
-
 }
