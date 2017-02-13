@@ -6,17 +6,8 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="mapperLocations" value="classpath*:mybatis/**/*Dao.xml"/>
-		<!-- 指定别名包 -->
-		<property name="typeAliasesPackage" value="com.cachexic.apple.system.entity
-												 <!--  com.cachexic.apple.system.entity,
-												   com.cachexic.apple.core.basic.entity,
-												   com.cachexic.apple.core.score.entity,
-												   com.cachexic.apple.core.mq.entity,
-												   com.cachexic.apple.core.train.entity,
-												   com.cachexic.apple.core.statistics.entity,
-												   com.cachexic.apple.core.statistics.dto,
-												   com.cachexic.apple.test.entity-->
-												"/>
+		<!-- 指定别名包
+		<property name="typeAliasesPackage" value="com.cachexic.apple.system.entity"/>-->
 	</bean>
 	
     <!-- mybatis scanner -->
