@@ -79,7 +79,7 @@
 		<include refid="table" />
 		<set>
 			version = #{version}+1 ,
-            modify_time = #{modifyTime},
+            modify_time = now(),
 			deleted = #{deleted},
 			name = #{name},
 			sex = #{sex},
@@ -197,7 +197,7 @@
 	<!--///////////////////////////////自定义/////////////////////////-->
 	<!--获取最大排序号-->
 	<select id="selectMaxSeq" resultType="int">
-		select max(seq) from <include refid="table" />
+		select max(sex) from <include refid="table" />
 	</select>
 	
 	<!--校验Name是否存在-->

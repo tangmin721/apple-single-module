@@ -62,7 +62,7 @@
 		<include refid="table" />
 		<set>
 			version = ${r"#{"}${"version"}${r"}"}+1 ,
-            modify_time = ${r"#{"}${"modifyTime"}${r"}"},
+            modify_time = now(),
 			deleted = ${r"#{"}${"deleted"}${r"}"},
 <#list entity.myfieldList as e>			${e.columnName} = ${r"#{"}${e.fieldName}${r"}"}<#if e_has_next>,</#if>
 			</#list>			

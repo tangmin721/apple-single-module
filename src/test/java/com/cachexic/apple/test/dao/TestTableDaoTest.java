@@ -1,9 +1,10 @@
 package com.cachexic.apple.test.dao;
 
+import com.cachexic.apple.common.core.entity.OrderField;
 import com.cachexic.apple.common.junit.SpringJunitTest;
 import com.cachexic.apple.common.utils.DateUtils;
-import com.cachexic.apple.system.entity.TestTableQuery;
 import com.cachexic.apple.test.entity.TestTable;
+import com.cachexic.apple.test.entity.TestTableQuery;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -107,7 +108,7 @@ public class TestTableDaoTest extends SpringJunitTest {
             dao.insert(entity);
         }
         System.out.println(System.nanoTime() - startTime);
-        //8299221344毫微秒=8.29秒  第一次
+        //8,299,221,344毫微秒=8.29秒  第一次
         //8493227388   8.49秒  第2次
         //8637662643   8.63秒 第3次
     }
@@ -118,8 +119,11 @@ public class TestTableDaoTest extends SpringJunitTest {
      */
     @Test
     public void daoTestSelectById() {
+        long startTime = System.nanoTime();
         TestTable entity = dao.selectById(1l);
+        System.out.println(System.nanoTime() - startTime);
         System.out.println(entity);
+
     }
 
     /**
@@ -127,6 +131,7 @@ public class TestTableDaoTest extends SpringJunitTest {
      */
     @Test
     public void daoTestSelectByIds() {
+
         List<Long> ids = Lists.newArrayList(1l, 2l, 3l);
         List<TestTable> selectByIds = dao.selectByIds(ids);
         System.out.println(selectByIds);
@@ -177,7 +182,21 @@ public class TestTableDaoTest extends SpringJunitTest {
     @Test
     public void daoTestSelectList() {
         TestTableQuery query = new TestTableQuery();
-        query.setDeleted(0);
+        query.setDeleted(1);
+
+     /*   //一、单字段排序
+        query.setOrderField("id");
+        query.setOrderDirection("desc");//也可以不设，用默认*/
+        //二、多字段排序
+        //方式1
+      /*  List<OrderField> orderFields = Lists.newArrayList();
+        orderFields.add(new OrderField("name", "desc"));
+        orderFields.add(new OrderField("sex", "asc"));
+        query.setOrderFields(orderFields);*/
+        //方式2
+        query.getOrderFields().add(new OrderField("name", "desc"));
+        query.getOrderFields().add(new OrderField("sex", "asc"));
+
         List<TestTable> entitys = dao.selectList(query);
         System.out.println(":::::::::" + entitys);
     }
@@ -186,6 +205,8 @@ public class TestTableDaoTest extends SpringJunitTest {
     public void daoTestSelectListPage() {
         TestTableQuery query = new TestTableQuery();
         query.setDeleted(0);
+        query.getOrderFields().add(new OrderField("name", "desc"));
+        query.getOrderFields().add(new OrderField("sex", "asc"));
         query.setPageCurrent(1l);
         query.setPageSize(10l);
         System.out.println(":::::::::" + dao.selectListPage(query));

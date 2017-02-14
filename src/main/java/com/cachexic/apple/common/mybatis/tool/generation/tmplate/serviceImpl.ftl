@@ -40,15 +40,15 @@ public class ${entity.className}ServiceImpl extends BaseServiceImpl<${entity.cla
 	}
 
 	/**
-	 * 校验entity是否可修改（code是否存在）
+	 * 校验entity是否可修改（name是否存在）
 	 */
 	@Override
-	public Boolean checkNameExit(${entity.className} entity) {
+	public Boolean isNameExit(${entity.className} entity) {
 		Long count = this.dao.selectCheckNameExit(entity.getName(), entity.getId());
 		if(count>0){
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	/**
@@ -56,23 +56,22 @@ public class ${entity.className}ServiceImpl extends BaseServiceImpl<${entity.cla
 	 */
 	@Override
 	@Transactional
-	public String saveOrUpdate(${entity.className} entity) {
-		if(!checkNameExit(entity)){
-			if(entity.getId()==null){
+	public Long saveOrUpdate(${entity.className} entity) {
+		Long id = entity.getId();
+		if(isNameExit(entity)){
+			if(id ==null){
 				throw new ValidateOtherException(ValidateOtherException.INSERT_FAILD,"名称已经存在，新增失败");
 			}else {
 				throw new ValidateOtherException(ValidateOtherException.UPDATE_FAILD,"名称已经存在，修改失败");
 			}
 		}
-		String msg = "";
-		if(entity.getId()==null){
-			this.insert(entity);
-			msg = "添加成功！";
+
+		if(id ==null){
+			return this.insert(entity);
 		}else {
 			this.update(entity);
-				msg = "编辑成功！";
+			return id;
 		}
-		return msg;
 	}
 
 }

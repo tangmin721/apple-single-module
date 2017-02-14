@@ -23,7 +23,7 @@ public class CodeCreateGeneratorMain {
 		//配置前缀包名,去掉entity
 		codeGen.setPackagePath("com.cachexic.apple.test");
 		//配置requestMap,最前面不要加“/”
-		codeGen.setRequestMapPath("system/user");
+		codeGen.setRequestMapPath("test/testTable");
 		//配置对应的数据库表名
 		codeGen.setTableName("test_table");
 		//配置模块名称  

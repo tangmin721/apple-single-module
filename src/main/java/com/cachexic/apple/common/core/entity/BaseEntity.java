@@ -34,7 +34,7 @@ public class BaseEntity implements Serializable {
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	//@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	@JSONField(serialize = false)
-	protected Date modifyTime = new Date();
+	protected Date modifyTime;
 
 	/**
 	 * 删除标记  默认未删除 0：未删除  1  已删除

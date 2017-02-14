@@ -43,7 +43,6 @@ public class ${entity.className}Controller extends BaseController{
 	public String list(${entity.className}Query query,Model model){
 		//query.setOrderField("seq");//默认是按id排
 		/*可同时多列排序
-		query.setOrderField(null);//先清空排序字段
 		query.getOrderFields().add(new OrderField("sortField1", "asc"));
 		query.getOrderFields().add(new OrderField("sortField2", "asc"));*/
 		Pagination<${entity.className}> page = ${entity.firstLowName}Service.selectListPagination(query);

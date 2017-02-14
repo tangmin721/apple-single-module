@@ -42,7 +42,7 @@ public class BaseQuery implements Serializable {
 	/**
 	 * 排序字段：默认按id，如果默认按其他，set一下
 	 */
-	protected String orderField="id";
+	protected String orderField;
 
 	/**
 	 * asc or desc  默认正序
@@ -55,7 +55,7 @@ public class BaseQuery implements Serializable {
 
 	public BaseQuery() {
 		this.startRow = (this.pageCurrent - 1) * this.pageSize;
-		this.orderFields.add(new OrderField(this.orderField, this.orderDirection));
+		//this.orderFields.add(new OrderField(this.orderField, this.orderDirection));
 	}
 
 	public Long getPageSize() {

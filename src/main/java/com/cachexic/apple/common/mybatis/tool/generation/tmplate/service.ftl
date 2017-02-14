@@ -21,12 +21,12 @@ public interface ${entity.className}Service extends BaseService<${entity.classNa
 	 * @param 
 	 * @return
 	 */
-	Boolean checkNameExit(${entity.className} entity);
+	Boolean isNameExit(${entity.className} entity);
 	
 	/**
 	 * 保存或添加
 	 * @return
 	 */
-	String saveOrUpdate(${entity.className} entity);
+	Long saveOrUpdate(${entity.className} entity);
 
 }

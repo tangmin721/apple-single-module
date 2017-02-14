@@ -167,7 +167,7 @@ public class EntityInfo{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		EntityInfo entityInfo = new EntityInfo(com.cachexic.apple.system.entity.User.class,"test_table");
+		EntityInfo entityInfo = new EntityInfo(com.cachexic.apple.user.entity.User.class,"test_table");
 		System.out.println(entityInfo);
 	}
 

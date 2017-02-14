@@ -2,8 +2,8 @@ package com.cachexic.apple.test.dao;
 
 import com.cachexic.apple.common.core.dao.BaseDao;
 import com.cachexic.apple.common.mybatis.annotation.MybatisDao;
-import com.cachexic.apple.system.entity.TestTableQuery;
 import com.cachexic.apple.test.entity.TestTable;
+import com.cachexic.apple.test.entity.TestTableQuery;
 import org.apache.ibatis.annotations.Param;
 
 /**
