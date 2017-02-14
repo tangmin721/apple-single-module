@@ -107,8 +107,8 @@ public class TestTableServiceImplTest extends SpringJunitTest {
                 entity.setBirthday(date);
                 list.add(entity);
             }
-            Long insertBatch = service.insertBatch(list);
-            System.out.println(insertBatch);
+      //      Long insertBatch = service.insertBatch(list);
+       //     System.out.println(insertBatch);
         } catch (ParseException e) {
             e.printStackTrace();
         }

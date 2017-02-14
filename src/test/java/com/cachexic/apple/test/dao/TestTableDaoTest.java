@@ -83,7 +83,7 @@ public class TestTableDaoTest extends SpringJunitTest {
             TestTable entity = getTestTable("1990-01-01", 18, "张三" + i);
             list.add(entity);
         }
-        dao.insertBatch(list);
+     //   dao.insertBatch(list);
         System.out.println(System.nanoTime() - startTime);
         /*1秒=1000豪秒
 		1毫秒=1000微秒

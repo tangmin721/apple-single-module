@@ -54,30 +54,6 @@ public abstract class BaseServiceImpl<T extends BaseEntity,Q extends BaseQuery> 
 		return result;
 	}
 
-	@Transactional
-	public Long insertBatch(List<T> list) {
-		if (list == null || list.size() <= 0){
-			return 0l;
-		}
-			
-		for(T entity:list){
-			//校验
-			ValidatorResult validateResult = BeanValidator.validateResult(entity, Insert.class);
-			if(!validateResult.getFlag()){
-				throw new ValidateException(ValidateException.INSERT_FAILD, JSON.toJSONString(validateResult.getErrorObjs()));
-			}
-		}
-
-		Long result = this.dao().insertBatch(list);
-
-		if (result <= 0){
-			throw BizException.DB_INSERT_RESULT_0;
-		}
-
-		return result;
-		
-	}
-
 	public T selectById(Long id) {
 		return this.dao().selectById(id);
 	}

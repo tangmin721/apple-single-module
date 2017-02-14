@@ -22,13 +22,6 @@ public interface BaseService<T extends BaseEntity,Q extends BaseQuery> {
 	Long insert(T entity);
 
 	/**
-	 * 批量保存对象
-	 * @param list
-	 * @return 返回插入的条数
-	 */
-	Long insertBatch(List<T> list);
-	
-	/**
 	 * 根据ID查找记录.
 	 * @param id
 	 * @return 返回T

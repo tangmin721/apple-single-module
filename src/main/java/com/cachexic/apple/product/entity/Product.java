@@ -1,6 +1,10 @@
 package com.cachexic.apple.product.entity;
 
 import com.cachexic.apple.common.core.entity.BaseEntity;
+import com.cachexic.apple.common.validate.Insert;
+import com.cachexic.apple.common.validate.Update;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @Description:商品
@@ -13,6 +17,8 @@ public class Product extends BaseEntity{
     /**
      * 商品名称
      */
+    @NotBlank(message="商品名称不能为空",groups={Insert.class,Update.class})
+    @Length(max=50,message="商品名称长度不能超过50",groups={Insert.class,Update.class})
     private String name;
 
     /**
@@ -23,13 +29,15 @@ public class Product extends BaseEntity{
     /**
      * 简要描述
      */
-    private String desc;
+    @NotBlank(message="简要描述不能为空",groups={Insert.class,Update.class})
+    @Length(max=50,message="简要描述长度不能超过50",groups={Insert.class,Update.class})
+    private String memo;
 
 
     /**
      * 商品创建人用户id
      */
-    private String uid;
+    private Long uid;
 
 
     public String getName() {
@@ -48,19 +56,19 @@ public class Product extends BaseEntity{
         this.price = price;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getMemo() {
+        return memo;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
-    public String getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 }

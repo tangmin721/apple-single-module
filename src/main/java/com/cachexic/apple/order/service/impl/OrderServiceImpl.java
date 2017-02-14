@@ -1,29 +1,28 @@
-package ${CONFIG.packagePath}.service.impl;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+package com.cachexic.apple.order.service.impl;
 
 import com.cachexic.apple.common.core.dao.BaseDao;
 import com.cachexic.apple.common.core.service.impl.BaseServiceImpl;
 import com.cachexic.apple.common.exception.ValidateOtherException;
-import ${CONFIG.packagePath}.dao.${entity.className}Dao;
-import ${entity.fullClassName};
-import ${entity.fullClassName}Query;
-import ${CONFIG.packagePath}.service.${entity.className}Service;
+import com.cachexic.apple.order.dao.OrderDao;
+import com.cachexic.apple.order.entity.Order;
+import com.cachexic.apple.order.entity.OrderQuery;
+import com.cachexic.apple.order.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * ${CONFIG.modelName}管理
+ * 订单管理
  * @author tangmin
- * @date ${.now?string("yyyy-MM-dd HH:mm:ss")}
+ * @date 2017-02-14 22:38:31
  */
-@Service("${entity.firstLowName}Service")
-public class ${entity.className}ServiceImpl extends BaseServiceImpl<${entity.className}, ${entity.className}Query> implements ${entity.className}Service{
+@Service("orderService")
+public class OrderServiceImpl extends BaseServiceImpl<Order, OrderQuery> implements OrderService{
 	@Autowired
-	private ${entity.className}Dao dao;
+	private OrderDao dao;
 
 	@Override
-	protected BaseDao<${entity.className}, ${entity.className}Query> dao() {
+	protected BaseDao<Order, OrderQuery> dao() {
 		return this.dao;
 	}
 	
@@ -43,11 +42,11 @@ public class ${entity.className}ServiceImpl extends BaseServiceImpl<${entity.cla
 	 * 校验entity是否可修改（name是否存在）
 	 */
 	@Override
-	public Boolean isNameExit(${entity.className} entity) {
-		Long count = this.dao.selectCheckNameExit(entity.getName(), entity.getId());
-		if(count>0){
-			return true;
-		}
+	public Boolean isNameExit(Order entity) {
+//		Long count = this.dao.selectCheckNameExit(entity.getName(), entity.getId());
+//		if(count>0){
+//			return true;
+//		}
 		return false;
 	}
 
@@ -57,7 +56,7 @@ public class ${entity.className}ServiceImpl extends BaseServiceImpl<${entity.cla
 	 * @return
 	 */
 	@Override
-	public Long insert(${entity.className} entity) {
+	public Long insert(Order entity) {
 		if(isNameExit(entity)){
 			throw new ValidateOtherException(ValidateOtherException.INSERT_FAILD,"名称已经存在，新增失败");
 		}
@@ -70,7 +69,7 @@ public class ${entity.className}ServiceImpl extends BaseServiceImpl<${entity.cla
 	 * @return
 	 */
 	@Override
-	public Long update(${entity.className} entity) {
+	public Long update(Order entity) {
 		if(isNameExit(entity)){
 			throw new ValidateOtherException(ValidateOtherException.UPDATE_FAILD,"名称已经存在，修改失败");
 		}
@@ -83,7 +82,7 @@ public class ${entity.className}ServiceImpl extends BaseServiceImpl<${entity.cla
 	 */
 	@Override
 	@Transactional
-	public Long saveOrUpdate(${entity.className} entity) {
+	public Long saveOrUpdate(Order entity) {
 		Long id = entity.getId();
 		if(isNameExit(entity)){
 			if(id ==null){

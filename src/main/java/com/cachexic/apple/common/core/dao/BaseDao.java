@@ -21,13 +21,6 @@ public interface BaseDao<T extends BaseEntity,Q extends BaseQuery> {
 	Long insert(T entity);
 
 	/**
-	 * 批量保存对象
-	 * @param list
-	 * @return
-	 */
-	Long insertBatch(List<T> list);
-	
-	/**
 	 * 根据ID查找记录.
 	 * @param id
 	 * @return
@@ -47,16 +40,30 @@ public interface BaseDao<T extends BaseEntity,Q extends BaseQuery> {
 	 * @return
 	 */
 	Long update(T entity);
+
+	/**
+	 * 根据id 彻底删除
+	 * @param id
+	 * @return
+	 */
+	Long removeById(Long id);
+
+	/**
+	 * 根据ids 彻底删除
+	 * @param ids
+	 * @return
+	 */
+	Long removeByIds(List<Long> ids);
 	
 	/**
-	 * 根据id 彻底删除 
+	 * 根据id  deleted标记为删除
 	 * @param id
 	 * @return
 	 */
 	Long deleteById(Long id);
 	
 	/**
-	 * 根据ids 彻底删除 
+	 * 根据ids deleted标记为删除
 	 * @param ids
 	 * @return
 	 */

@@ -22,23 +22,12 @@
 		</trim>
 		values
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			0,${r"#{"}${"createTime"}${r"}"},${r"#{"}${"deleted"}${r"}"},
+			0,now(),${r"#{"}${"deleted"}${r"}"},
 <#list entity.myfieldList as e>			<if test="${e.fieldName} != null">${r"#{"}${e.fieldName}${r"}"}<#if e_has_next>,</#if></if>
 			</#list>			
 		</trim>
 	</insert>
-	
-	<!--批量插入-->
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true">
-		insert into
-		<include refid="table" />
-		(<include refid="columns" />)
-		values
-		<foreach collection="list" item="item" index="index" separator=",">
-			(null,0,${r"#{"}${"item.createTime"}${r"}"},null,${r"#{"}${"item.deleted"}${r"}"},<#list entity.myfieldList as e>${r"#{"}item.${e.fieldName}${r"}"}<#if e_has_next>,</#if></#list>)
-		</foreach>
-	</insert>
-	
+
 	<!-- 根据主键查询 -->
 	<select id="selectById" parameterType="long" resultMap="${entity.firstLowName}">
 		select <include refid="columns" /> from <include refid="table" />
@@ -71,7 +60,7 @@
 			id = ${r"#{"}${"id"}${r"}"} and version = ${r"#{"}${"version"}${r"}"}
 		</where>
 	</update>
-	
+
 	<!-- 根据id彻底删除 -->
 	<delete id="deleteById" parameterType="long">
 		delete from <include refid="table" />

@@ -1,59 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cachexic.apple.test.dao.TestTableDao">
+<mapper namespace="com.cachexic.apple.product.dao.ProductDao">
 	
-	<sql id="table"> test_table </sql>
-	<sql id="columns"> id,version,create_time,modify_time,deleted,name,sex,age,birthday,email,price </sql>
+	<sql id="table"> t_product_base </sql>
+	<sql id="columns"> id,version,create_time,modify_time,deleted,name,price,memo,uid </sql>
 	
-	<resultMap id="testTable" type="com.cachexic.apple.test.entity.TestTable">
+	<resultMap id="product" type="com.cachexic.apple.product.entity.Product">
 		<result property="id" column="id" />
 		<result property="version" column="version" />
 		<result property="createTime" column="create_time" />
 		<result property="modifyTime" column="modify_time" />
 		<result property="deleted" column="deleted" />
 		<result property="name" column="name" />
-		<result property="sex" column="sex" />
-		<result property="age" column="age" />
-		<result property="birthday" column="birthday" />
-		<result property="email" column="email" />
 		<result property="price" column="price" />
+		<result property="memo" column="memo" />
+		<result property="uid" column="uid" />
 	</resultMap>
 	
 	<!--单条插入-->
-	<insert id="insert" parameterType="com.cachexic.apple.test.entity.TestTable" keyProperty="id" useGeneratedKeys="true">
+	<insert id="insert" parameterType="com.cachexic.apple.product.entity.Product" keyProperty="id" useGeneratedKeys="true">
 		insert into
 		<include refid="table" />
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			version,create_time,deleted,
 			<if test="name != null">name,</if>
-			<if test="sex != null">sex,</if>
-			<if test="age != null">age,</if>
-			<if test="birthday != null">birthday,</if>
-			<if test="email != null">email,</if>
-			<if test="price != null">price</if>
+			<if test="price != null">price,</if>
+			<if test="memo != null">memo,</if>
+			<if test="uid != null">uid</if>
 		</trim>
 		values
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			0,now(),#{deleted},
 			<if test="name != null">#{name},</if>
-			<if test="sex != null">#{sex},</if>
-			<if test="age != null">#{age},</if>
-			<if test="birthday != null">#{birthday},</if>
-			<if test="email != null">#{email},</if>
-			<if test="price != null">#{price}</if>
+			<if test="price != null">#{price},</if>
+			<if test="memo != null">#{memo},</if>
+			<if test="uid != null">#{uid}</if>
 		</trim>
 	</insert>
 
 	<!-- 根据主键查询 -->
-	<select id="selectById" parameterType="long" resultMap="testTable">
+	<select id="selectById" parameterType="long" resultMap="product">
 		select <include refid="columns" /> from <include refid="table" />
 		where
 		id=#{id}
 	</select>
 	
 	<!-- 根据主键批量查询 -->
-	<select id="selectByIds" parameterType="java.util.List" resultMap="testTable" >
+	<select id="selectByIds" parameterType="java.util.List" resultMap="product" >
 		select <include refid="columns" /> from <include refid="table" />
 		where id in
 		<foreach collection="list" separator="," item="id" open="(" close=")">
@@ -63,7 +57,7 @@
 	
 	
 	<!-- 单条更新:version+1 实现乐观锁 -->
-	<update id="update" parameterType="com.cachexic.apple.test.entity.TestTable">
+	<update id="update" parameterType="com.cachexic.apple.product.entity.Product">
 		update
 		<include refid="table" />
 		<set>
@@ -71,17 +65,15 @@
             modify_time = now(),
 			deleted = #{deleted},
 			name = #{name},
-			sex = #{sex},
-			age = #{age},
-			birthday = #{birthday},
-			email = #{email},
-			price = #{price}
+			price = #{price},
+			memo = #{memo},
+			uid = #{uid}
 		</set>
 		<where>
 			id = #{id} and version = #{version}
 		</where>
 	</update>
-	
+
 	<!-- 根据id彻底删除 -->
 	<delete id="deleteById" parameterType="long">
 		delete from <include refid="table" />
@@ -119,25 +111,17 @@
 				<if test="nameLike == false"> and name=#{name}</if>
 				<if test="nameLike == true"> and name like  CONCAT('%',#{name},'%')</if>
 			</if>
-			<if test="sex != null and sex !=''"> 
-				<if test="sexLike == false"> and sex=#{sex}</if>
-				<if test="sexLike == true"> and sex like  CONCAT('%',#{sex},'%')</if>
-			</if>
-			<if test="age != null and age !=''"> 
-				<if test="ageLike == false"> and age=#{age}</if>
-				<if test="ageLike == true"> and age like  CONCAT('%',#{age},'%')</if>
-			</if>
-			<if test="birthday != null and birthday !=''"> 
-				<if test="birthdayLike == false"> and birthday=#{birthday}</if>
-				<if test="birthdayLike == true"> and birthday like  CONCAT('%',#{birthday},'%')</if>
-			</if>
-			<if test="email != null and email !=''"> 
-				<if test="emailLike == false"> and email=#{email}</if>
-				<if test="emailLike == true"> and email like  CONCAT('%',#{email},'%')</if>
-			</if>
 			<if test="price != null and price !=''"> 
 				<if test="priceLike == false"> and price=#{price}</if>
 				<if test="priceLike == true"> and price like  CONCAT('%',#{price},'%')</if>
+			</if>
+			<if test="memo != null and memo !=''"> 
+				<if test="memoLike == false"> and memo=#{memo}</if>
+				<if test="memoLike == true"> and memo like  CONCAT('%',#{memo},'%')</if>
+			</if>
+			<if test="uid != null and uid !=''"> 
+				<if test="uidLike == false"> and uid=#{uid}</if>
+				<if test="uidLike == true"> and uid like  CONCAT('%',#{uid},'%')</if>
 			</if>
 			<!--<if test="startTime != null"> and birthday <![CDATA[   >=  ]]>#{startTime} </if>
 			<if test="endTime != null"> and  birthday <![CDATA[   <  ]]> #{endTime}</if>
@@ -163,14 +147,14 @@
 	</sql>
 	
 	<!--查询所有记录-->
-	<select id="selectList" parameterType="com.cachexic.apple.test.entity.TestTableQuery" resultMap="testTable">
+	<select id="selectList" parameterType="com.cachexic.apple.product.entity.ProductQuery" resultMap="product">
 		<include refid="selectorFields" />
 		<include refid="selectorWhere" />
 		<include refid="selectorOrder" />
 	</select>
 	
 	<!-- 分页 -->
-	<select id="selectListPage" parameterType="com.cachexic.apple.test.entity.TestTableQuery" resultMap="testTable">
+	<select id="selectListPage" parameterType="com.cachexic.apple.product.entity.ProductQuery" resultMap="product">
 		<include refid="selectorFields" />
 		<include refid="selectorWhere" />
 		<include refid="selectorOrder" />
@@ -178,7 +162,7 @@
 	</select>
 	
 	<!--总条数-->
-	<select id="selectListTotal" parameterType="com.cachexic.apple.test.entity.TestTableQuery" resultType="long">
+	<select id="selectListTotal" parameterType="com.cachexic.apple.product.entity.ProductQuery" resultType="long">
 		select count(1) from <include refid="table" />
 		<include refid="selectorWhere" />
 	</select>
@@ -186,7 +170,7 @@
 	<!--///////////////////////////////自定义/////////////////////////-->
 	<!--获取最大排序号-->
 	<select id="selectMaxSeq" resultType="int">
-		select max(sex) from <include refid="table" />
+		select max(seq) from <include refid="table" />
 	</select>
 	
 	<!--校验Name是否存在-->

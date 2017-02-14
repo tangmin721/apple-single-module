@@ -1,7 +1,7 @@
 package com.cachexic.apple.common.mybatis.tool.generation;
 
 import com.cachexic.apple.common.mybatis.tool.generation.generator.CodeGenerator;
-import com.cachexic.apple.test.entity.TestTable;
+import com.cachexic.apple.order.entity.Order;
 
 /**
  * 运行此方法生成代码
@@ -19,17 +19,17 @@ public class CodeCreateGeneratorMain {
 	{
 		CodeGenerator codeGen = new CodeGenerator();
 		//配置需要生成的类
-		codeGen.addClass(TestTable.class);
+		codeGen.addClass(Order.class);
 		//配置前缀包名,去掉entity
-		codeGen.setPackagePath("com.cachexic.apple.test");
+		codeGen.setPackagePath("com.cachexic.apple.order");
 		//配置requestMap,最前面不要加“/”
 		codeGen.setRequestMapPath("test/testTable");
 		//配置对应的数据库表名
-		codeGen.setTableName("test_table");
+		codeGen.setTableName("t_order_base");
 		//配置模块名称  
-		codeGen.setModelName("用户");
+		codeGen.setModelName("订单");
 		//代码生成存放位置  
-		codeGen.outPut("d:\\Code\\testTable");
+		codeGen.outPut("d:\\Code\\order");
 		System.out.println("代码生成成功");
 	}
 
