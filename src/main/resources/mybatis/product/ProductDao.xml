@@ -4,13 +4,14 @@
 <mapper namespace="com.cachexic.apple.product.dao.ProductDao">
 	
 	<sql id="table"> t_product_base </sql>
-	<sql id="columns"> id,version,create_time,modify_time,deleted,name,price,memo,uid </sql>
+	<sql id="columns"> id,version,create_time,modify_time,delete_time,deleted,name,price,memo,uid </sql>
 	
 	<resultMap id="product" type="com.cachexic.apple.product.entity.Product">
 		<result property="id" column="id" />
 		<result property="version" column="version" />
 		<result property="createTime" column="create_time" />
 		<result property="modifyTime" column="modify_time" />
+		<result property="deleteTime" column="delete_time" />
 		<result property="deleted" column="deleted" />
 		<result property="name" column="name" />
 		<result property="price" column="price" />
@@ -74,18 +75,41 @@
 		</where>
 	</update>
 
+	<!-- 根据id删除 修改标记 -->
+	<update id="deleteById" parameterType="long">
+		update <include refid="table" />
+		<set>
+			version = version+1,
+			delete_time = now(),
+			deleted = 1,
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+
+	<!-- 根据主键批量删除 修改标记 -->
+	<delete id="deleteByIds" parameterType="java.util.List">
+		update <include refid="table" />
+		<set>
+			version = version+1,
+			delete_time = now(),
+			deleted = 1,
+		</set>
+		where id in
+		<foreach collection="list" separator="," item="id" open="(" close=")">
+			#{id}
+		</foreach>
+	</delete>
+
 	<!-- 根据id彻底删除 -->
-	<delete id="deleteById" parameterType="long">
-		delete from <include refid="table" />
-		where
-		id=#{id}
+	<delete id="removeById" parameterType="long">
+		delete from <include refid="table" /> where id=#{id}
 	</delete>
 	
-	<!-- 根据主键批量删除 -->
-	<delete id="deleteByIds" parameterType="java.util.List">
-		delete from <include refid="table" />
-		where
-		id in
+	<!-- 根据ids批量彻底删除 -->
+	<delete id="removeByIds" parameterType="java.util.List">
+		delete from <include refid="table" /> where id in
 		<foreach collection="list" separator="," item="id" open="(" close=")">
 			#{id}
 		</foreach>
@@ -125,6 +149,7 @@
 			</if>
 			<!--<if test="startTime != null"> and birthday <![CDATA[   >=  ]]>#{startTime} </if>
 			<if test="endTime != null"> and  birthday <![CDATA[   <  ]]> #{endTime}</if>
+			 and deleted=0
 			-->
 		</where>
 	</sql>

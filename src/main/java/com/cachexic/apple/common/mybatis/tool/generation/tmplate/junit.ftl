@@ -93,15 +93,15 @@ public class Test${entity.className} extends SpringJunitTest {
 
 	@Rollback(true)
 	@Test
-	public void testDeleteById() {
-		System.out.println("testDeleteById==>"+service.deleteById(51l));
+	public void testremoveById() {
+		System.out.println("testremoveById==>"+service.removeById(51l));
 	}
 
 	@Rollback(true)
 	@Test
-	public void testDeleteByIds() {
+	public void testremoveByIds() {
 		List<Long> ids = Lists.newArrayList(51l,52l,53l,54l);
-		System.out.println("testDeleteById==>"+service.deleteByIds(ids));
+		System.out.println("testremoveById==>"+service.removeByIds(ids));
 	}
 
 	@Test

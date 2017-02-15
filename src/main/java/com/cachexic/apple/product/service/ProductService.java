@@ -5,9 +5,9 @@ import com.cachexic.apple.product.entity.Product;
 import com.cachexic.apple.product.entity.ProductQuery;
 
 /**
- * 用户管理
+ * 商品管理
  * @author tangmin
- * @date 2017-02-14 21:19:57
+ * @date 2017-02-15 11:50:23
  */
 public interface ProductService extends BaseService<Product, ProductQuery>{
 	/**

@@ -3,9 +3,9 @@ package com.cachexic.apple.product.entity;
 import com.cachexic.apple.common.core.entity.BaseQuery;
 
 /**
- * 用户管理
+ * 商品管理
  * @author tangmin
- * @date 2017-02-14 21:19:57
+ * @date 2017-02-15 11:58:49
  */
 public class ProductQuery extends BaseQuery{
 	private static final long serialVersionUID = 1L;
@@ -16,8 +16,8 @@ public class ProductQuery extends BaseQuery{
 	private String price;
 	private Boolean priceLike = true;
 	
-	private String desc;
-	private Boolean descLike = true;
+	private String memo;
+	private Boolean memoLike = true;
 	
 	private String uid;
 	private Boolean uidLike = true;
@@ -47,17 +47,17 @@ public class ProductQuery extends BaseQuery{
 	public void setPriceLike(Boolean priceLike) {
 		this.priceLike = priceLike;
 	}
-	public String getDesc() {
-		return desc;
+	public String getMemo() {
+		return memo;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
-	public Boolean getDescLike() {
-		return descLike;
+	public Boolean getMemoLike() {
+		return memoLike;
 	}
-	public void setDescLike(Boolean descLike) {
-		this.descLike = descLike;
+	public void setMemoLike(Boolean memoLike) {
+		this.memoLike = memoLike;
 	}
 	public String getUid() {
 		return uid;

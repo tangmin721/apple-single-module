@@ -21,33 +21,33 @@ import java.util.List;
 /**
  * @Description: baseService实现
  * @author: tangm
- * @date: 2016年2月18日 
+ * @date: 2016年2月18日
  * @version: 1.0
  */
-public abstract class BaseServiceImpl<T extends BaseEntity,Q extends BaseQuery> implements BaseService<T,Q> {
-	
-	protected static final Logger logger = LoggerFactory.getLogger(BaseServiceImpl.class);
-	
-	protected abstract BaseDao<T,Q> dao();
+public abstract class BaseServiceImpl<T extends BaseEntity, Q extends BaseQuery> implements BaseService<T, Q> {
 
-	public Long insert(T entity){
-		if (entity == null){
+	protected static final Logger logger = LoggerFactory.getLogger(BaseServiceImpl.class);
+
+	protected abstract BaseDao<T, Q> dao();
+
+	public Long insert(T entity) {
+		if (entity == null) {
 			throw new RuntimeException("insert entity:T is null");
 		}
-		
+
 		//Validator校验
 		ValidatorResult validateResult = BeanValidator.validateResult(entity, Insert.class);
-		if(!validateResult.getFlag()){
+		if (!validateResult.getFlag()) {
 			throw new ValidateException(ValidateException.INSERT_FAILD, JSON.toJSONString(validateResult.getErrorObjs()));
 		}
-		
+
 		Long result = this.dao().insert(entity);
 
-		if (result <= 0){
+		if (result <= 0) {
 			throw BizException.DB_INSERT_RESULT_0;
 		}
 
-		if (entity != null && entity.getId() != null && result > 0){
+		if (entity != null && entity.getId() != null && result > 0) {
 			return entity.getId();
 		}
 
@@ -63,19 +63,19 @@ public abstract class BaseServiceImpl<T extends BaseEntity,Q extends BaseQuery> 
 	}
 
 	public Long update(T entity) {
-		if (entity == null){
+		if (entity == null) {
 			throw new RuntimeException("update entity:T is null");
 		}
-		
+
 		//校验
 		ValidatorResult validateResult = BeanValidator.validateResult(entity, Update.class);
-		if(!validateResult.getFlag()){
+		if (!validateResult.getFlag()) {
 			throw new ValidateException(ValidateException.UPDATE_FAILD, JSON.toJSONString(validateResult.getErrorObjs()));
 		}
 
 		Long result = this.dao().update(entity);
 
-		if (result <= 0){
+		if (result <= 0) {
 			throw BizException.DB_UPDATE_RESULT_0;
 		}
 
@@ -91,6 +91,15 @@ public abstract class BaseServiceImpl<T extends BaseEntity,Q extends BaseQuery> 
 		return this.dao().deleteByIds(ids);
 	}
 
+	public Long removeById(Long id) {
+		return this.dao().removeById(id);
+	}
+
+	@Transactional
+	public Long removeByIds(List<Long> ids) {
+		return this.dao().removeByIds(ids);
+	}
+
 	public List<T> selectList(Q query) {
 		return this.dao().selectList(query);
 	}
@@ -102,9 +111,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity,Q extends BaseQuery> 
 	public Long selectListTotal(Q query) {
 		return this.dao().selectListTotal(query);
 	}
-	
-	public Pagination<T> selectListPagination(Q query){
-		Pagination<T> pagination = new Pagination<T>(query.getPageCurrent(),query.getPageSize(),this.selectListTotal(query));
+
+	public Pagination<T> selectListPagination(Q query) {
+		Pagination<T> pagination = new Pagination<T>(query.getPageCurrent(), query.getPageSize(), this.selectListTotal(query));
 		pagination.setList(this.selectListPage(query));
 		return pagination;
 	}

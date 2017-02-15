@@ -9,6 +9,7 @@ CREATE TABLE `${entity.tableName}` (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `modify_time` datetime  COMMENT '修改时间',
   `deleted` tinyint(1) NOT NULL DEFAULT b'0' COMMENT '删除标记',
+  `delete_time` datetime  COMMENT '删除时间',
 <#list entity.myfieldList as e>  `${e.columnName}` varchar(50) NOT NULL COMMENT '@TODO注释',
 </#list>	
   PRIMARY KEY (`id`)

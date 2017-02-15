@@ -134,17 +134,30 @@ public class TestTableServiceImplTest extends SpringJunitTest {
         service.update(entity);
     }
 
-    @Rollback(true)
+    @Rollback(false)
     @Test
     public void deleteById(){
-        System.out.println(service.deleteById(11l));
+        System.out.println(service.deleteById(110l));
+    }
+
+    @Rollback(false)
+    @Test
+    public void deleteByIds(){
+        List<Long> ids = Lists.newArrayList(119l,116l,117l,118l);
+        System.out.println(service.deleteByIds(ids));
     }
 
     @Rollback(true)
     @Test
-    public void deleteByIds(){
+    public void removeById(){
+        System.out.println(service.removeById(11l));
+    }
+
+    @Rollback(true)
+    @Test
+    public void removeByIds(){
         List<Long> ids = Lists.newArrayList(108l,109l,103l,104l);
-        System.out.println(service.deleteByIds(ids));
+        System.out.println(service.removeByIds(ids));
     }
 
 

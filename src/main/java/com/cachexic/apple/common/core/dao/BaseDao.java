@@ -42,32 +42,32 @@ public interface BaseDao<T extends BaseEntity,Q extends BaseQuery> {
 	Long update(T entity);
 
 	/**
-	 * 根据id 彻底删除
+	 * 根据id deleted标记为1删除
+	 * @param id
+	 * @return
+	 */
+	Long deleteById(Long id);
+
+	/**
+	 * 根据ids deleted标记为1删除
+	 * @param ids
+	 * @return
+	 */
+	Long deleteByIds(List<Long> ids);
+
+	/**
+	 * 根据id  彻底删除
 	 * @param id
 	 * @return
 	 */
 	Long removeById(Long id);
-
+	
 	/**
 	 * 根据ids 彻底删除
 	 * @param ids
 	 * @return
 	 */
 	Long removeByIds(List<Long> ids);
-	
-	/**
-	 * 根据id  deleted标记为删除
-	 * @param id
-	 * @return
-	 */
-	Long deleteById(Long id);
-	
-	/**
-	 * 根据ids deleted标记为删除
-	 * @param ids
-	 * @return
-	 */
-	Long deleteByIds(List<Long> ids);
 	
 	/**
 	 * 查询所有记录

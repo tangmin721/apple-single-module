@@ -81,16 +81,44 @@
 			id = #{id} and version = #{version}
 		</where>
 	</update>
-	
+
+	<!-- 根据id删除 修改标记 -->
+	<update id="deleteById" parameterType="long">
+		update <include refid="table" />
+		<set>
+			version = version+1,
+			delete_time = now(),
+			deleted = 1,
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+
+	<!-- 根据主键批量删除 修改标记 -->
+	<delete id="deleteByIds" parameterType="java.util.List">
+        update <include refid="table" />
+        <set>
+            version = version+1,
+            delete_time = now(),
+            deleted = 1,
+        </set>
+		where
+		id in
+		<foreach collection="list" separator="," item="id" open="(" close=")">
+			#{id}
+		</foreach>
+	</delete>
+
 	<!-- 根据id彻底删除 -->
-	<delete id="deleteById" parameterType="long">
+	<delete id="removeById" parameterType="long">
 		delete from <include refid="table" />
 		where
 		id=#{id}
 	</delete>
 	
 	<!-- 根据主键批量删除 -->
-	<delete id="deleteByIds" parameterType="java.util.List">
+	<delete id="removeByIds" parameterType="java.util.List">
 		delete from <include refid="table" />
 		where
 		id in

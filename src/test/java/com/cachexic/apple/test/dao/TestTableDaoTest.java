@@ -162,8 +162,8 @@ public class TestTableDaoTest extends SpringJunitTest {
      */
     @Rollback(false)
     @Test
-    public void daoTestDeleteById() {
-        dao.deleteById(1l);
+    public void daoTestremoveById() {
+        dao.removeById(1l);
     }
 
     /**
@@ -171,9 +171,9 @@ public class TestTableDaoTest extends SpringJunitTest {
      */
     @Rollback(true)
     @Test
-    public void daoTestDeleteByIds() {
+    public void daoTestremoveByIds() {
         List<Long> ids = Lists.newArrayList(1l, 2l, 3l);
-        dao.deleteByIds(ids);
+        dao.removeByIds(ids);
     }
 
     /**

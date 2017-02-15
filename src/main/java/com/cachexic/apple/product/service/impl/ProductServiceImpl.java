@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 用户管理
+ * 商品管理
  * @author tangmin
- * @date 2017-02-14 21:19:57
+ * @date 2017-02-15 11:50:23
  */
 @Service("productService")
 public class ProductServiceImpl extends BaseServiceImpl<Product, ProductQuery> implements ProductService{
@@ -25,7 +25,27 @@ public class ProductServiceImpl extends BaseServiceImpl<Product, ProductQuery> i
 	protected BaseDao<Product, ProductQuery> dao() {
 		return this.dao;
 	}
+	
+	/**
+	 * 获取seq
+	 */
+	@Override
+	public Integer selectMaxSeq() {
+		Integer selectMaxSeq = this.dao.selectMaxSeq();
+		if(selectMaxSeq!=null){
+			return selectMaxSeq;
+		}
+		return 0;
+	}
 
+	/**
+	 * 校验entity是否可修改（name是否存在）
+	 */
+	@Override
+	public Boolean isNameExit(Product entity) {
+		Long count = this.dao.selectCheckNameExit(entity.getName(), entity.getId());
+		return count > 0;
+	}
 
 	/**
 	 * 重写insert方法，判断是否可以插入
@@ -52,27 +72,6 @@ public class ProductServiceImpl extends BaseServiceImpl<Product, ProductQuery> i
 		}
 		super.update(entity);
 		return entity.getId();
-	}
-
-	/**
-	 * 获取seq
-	 */
-	@Override
-	public Integer selectMaxSeq() {
-		Integer selectMaxSeq = this.dao.selectMaxSeq();
-		if(selectMaxSeq!=null){
-			return selectMaxSeq;
-		}
-		return 0;
-	}
-
-	/**
-	 * 校验entity是否可修改（name是否存在）
-	 */
-	@Override
-	public Boolean isNameExit(Product entity) {
-		Long count = this.dao.selectCheckNameExit(entity.getName(), entity.getId());
-		return count > 0;
 	}
 	
 	/**

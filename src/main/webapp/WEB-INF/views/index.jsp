@@ -6,13 +6,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>首页</title>
+    <title>index</title>
 </head>
 <body>
-<a href="/login">登录系统</a>
-<div>
-    欢迎来到本项目，这是系统首页,商城，广告，搜索。。。
-</div>
+<a href="/order/orderBase/orderList">订单中心</a>
+
+<a href="/product/productBase/productList">商品中心</a>
 </body>
 </html>
-

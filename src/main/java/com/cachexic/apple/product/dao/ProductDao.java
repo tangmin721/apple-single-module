@@ -7,9 +7,9 @@ import com.cachexic.apple.product.entity.ProductQuery;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * 用户管理
+ * 商品管理
  * @author tangmin
- * @date 2017-02-14 21:19:57
+ * @date 2017-02-15 11:50:23
  */
 @MybatisDao
 public interface ProductDao extends BaseDao<Product, ProductQuery>{

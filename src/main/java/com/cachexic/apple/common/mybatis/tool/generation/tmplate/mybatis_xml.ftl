@@ -61,18 +61,41 @@
 		</where>
 	</update>
 
+	<!-- 根据id删除 修改标记 -->
+	<update id="deleteById" parameterType="long">
+		update <include refid="table" />
+		<set>
+			version = version+1,
+			delete_time = now(),
+			deleted = 1,
+		</set>
+		<where>
+			id = ${r"#{"}${"id"}${r"}"}
+		</where>
+	</update>
+
+	<!-- 根据主键批量删除 修改标记 -->
+	<delete id="deleteByIds" parameterType="java.util.List">
+		update <include refid="table" />
+		<set>
+			version = version+1,
+			delete_time = now(),
+			deleted = 1,
+		</set>
+		where id in
+		<foreach collection="list" separator="," item="id" open="(" close=")">
+			${r"#{"}${"id"}${r"}"}
+		</foreach>
+	</delete>
+
 	<!-- 根据id彻底删除 -->
-	<delete id="deleteById" parameterType="long">
-		delete from <include refid="table" />
-		where
-		id=${r"#{"}${"id"}${r"}"}
+	<delete id="removeById" parameterType="long">
+		delete from <include refid="table" /> where id=${r"#{"}${"id"}${r"}"}
 	</delete>
 	
-	<!-- 根据主键批量删除 -->
-	<delete id="deleteByIds" parameterType="java.util.List">
-		delete from <include refid="table" />
-		where
-		id in
+	<!-- 根据ids批量彻底删除 -->
+	<delete id="removeByIds" parameterType="java.util.List">
+		delete from <include refid="table" /> where id in
 		<foreach collection="list" separator="," item="id" open="(" close=")">
 			${r"#{"}${"id"}${r"}"}
 		</foreach>
@@ -101,6 +124,7 @@
 			</#list>					
 			<!--<if test="startTime != null"> and birthday <![CDATA[   >=  ]]>${r"#{"}${"startTime"}${r"}"} </if>
 			<if test="endTime != null"> and  birthday <![CDATA[   <  ]]> ${r"#{"}${"endTime"}${r"}"}</if>
+			 and deleted=0
 			-->
 		</where>
 	</sql>

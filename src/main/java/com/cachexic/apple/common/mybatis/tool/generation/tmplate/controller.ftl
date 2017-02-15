@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.cachexic.apple.common.core.controller.BaseController;
-import com.cachexic.apple.common.core.dto.AjaxCallback;
+import com.cachexic.apple.common.core.ajax.AjaxCallback;
 import com.cachexic.apple.common.core.entity.Pagination;
 import ${CONFIG.packagePath}.entity.${entity.className};
 import ${CONFIG.packagePath}.entity.${entity.className}Query;
@@ -58,9 +58,9 @@ public class ${entity.className}Controller extends BaseController{
 	@RequestMapping("${entity.firstLowName}Form")
 	@RequiresPermissions("${entity.className}:create")
 	public String ${entity.firstLowName}Form(Model model){
-		${entity.className} entity = new ${entity.className}();
-		entity.setSeq(${entity.firstLowName}Service.selectMaxSeq()+1);
-		model.addAttribute("entity", entity);
+		//${entity.className} entity = new ${entity.className}();
+		//entity.setSeq(${entity.firstLowName}Service.selectMaxSeq()+1);
+		//model.addAttribute("entity", entity);
 		return "${CONFIG.requestMapPath}/${entity.firstLowName}Form";
 	}
 	
@@ -85,8 +85,14 @@ public class ${entity.className}Controller extends BaseController{
 	@RequiresPermissions(value={"${entity.className}:update","${entity.className}:create"},logical=Logical.AND)
 	@ResponseBody
 	public String save${entity.className}(${entity.className} entity){
-		AjaxCallback ok = AjaxCallback.OK(${entity.firstLowName}Service.saveOrUpdate(entity));
-		return JSON.toJSONString(ok);
+		AjaxCallback result = null;
+		long entityId = ${entity.firstLowName}Service.saveOrUpdate(entity);
+		if (entityId > 0) {
+			result = AjaxCallback.OK("操作成功");
+		}else {
+			result = AjaxCallback.ERROR("操作失败");
+		}
+		return JSON.toJSONString(result);
 	}
 	
 	/**
@@ -104,7 +110,7 @@ public class ${entity.className}Controller extends BaseController{
 		for(String strId:split){
 			idList.add(Long.parseLong(strId));
 		}
-		${entity.firstLowName}Service.deleteByIds(idList);
+		${entity.firstLowName}Service.removeByIds(idList);
 		
 		AjaxCallback ok = AjaxCallback.OK("删除选中项成功！");
 		return JSON.toJSONString(ok);

@@ -74,14 +74,14 @@
 	</update>
 	
 	<!-- 根据id彻底删除 -->
-	<delete id="deleteById" parameterType="long">
+	<delete id="removeById" parameterType="long">
 		delete from <include refid="table" />
 		where
 		id=${r"#{"}${"id"}${r"}"}
 	</delete>
 	
 	<!-- 根据主键批量删除 -->
-	<delete id="deleteByIds" parameterType="java.util.List">
+	<delete id="removeByIds" parameterType="java.util.List">
 		delete from <include refid="table" />
 		where
 		id in

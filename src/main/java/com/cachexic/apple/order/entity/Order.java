@@ -29,7 +29,35 @@ public class Order extends BaseEntity{
      */
     private String status;
 
+    public Long getOno() {
+        return ono;
+    }
 
+    public void setOno(Long ono) {
+        this.ono = ono;
+    }
 
+    public String getUid() {
+        return uid;
+    }
 
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

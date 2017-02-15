@@ -79,12 +79,12 @@ public class ProductServiceImplTest extends SpringJunitTest{
     }
 
     @Test
-    public void deleteById() throws Exception {
+    public void removeById() throws Exception {
 
     }
 
     @Test
-    public void deleteByIds() throws Exception {
+    public void removeByIds() throws Exception {
 
     }
 
